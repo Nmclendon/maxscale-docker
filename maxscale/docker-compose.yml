@@ -1,21 +1,21 @@
 version: '2'
 services:
-    master1:
+    shard1:
         image: mariadb:10.3
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'Y'
         volumes:
-            - ./sql/master1:/docker-entrypoint-initdb.d
+            - ./sql/shard1:/docker-entrypoint-initdb.d
         command: mysqld --log-bin=mariadb-bin --binlog-format=ROW --server-id=3001
         ports:
             - "4002:3306"
 
-    master2:
+    shard2:
         image: mariadb:10.3
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'Y'
         volumes:
-            - ./sql/master2:/docker-entrypoint-initdb.d
+            - ./sql/shard2:/docker-entrypoint-initdb.d
         command: mysqld --log-bin=mariadb-bin --binlog-format=ROW --server-id=3002
         ports:
             - "4003:3306"
@@ -23,12 +23,10 @@ services:
     maxscale:
         image: mariadb/maxscale:latest
         depends_on:
-            - master1
-            - master2
+            - shard1
+            - shard2
         volumes:
             - ./maxscale.cnf.d:/etc/maxscale.cnf.d
         ports:
             - "4000:4000"  # sharded-service listener.
-            - "4006:4006"  # readwrite port
-            - "4008:4008"  # readonly port
             - "8989:8989"  # REST API port
