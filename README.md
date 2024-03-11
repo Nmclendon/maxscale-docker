@@ -313,3 +313,18 @@ FLUSH PRIVILEGES;
 ```
 
 This line reloads the privileges from the grants tables so that the above changes go into effect right away.
+
+## Reference material:
+
+Here are some links that I used to help me make this configuration and provide better insight on sharding.
+
+**Permissions references**
+https://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-monitor/#required-grants
+https://mariadb.com/kb/en/mariadb-maxscale-6-setting-up-mariadb-maxscale/
+
+**Configuration references**
+https://mariadb.com/kb/en/mariadb-maxscale-6-configuring-servers/
+https://mariadb.com/kb/en/mariadb-maxscale-6-simple-sharding-with-two-servers/
+
+**More on sharding**
+https://www.digitalocean.com/community/tutorials/understanding-database-sharding
