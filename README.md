@@ -7,17 +7,18 @@ This Docker image runs the latest version of MariaDB MaxScale.
 
 ## Running
 [The MaxScale docker-compose setup](./docker-compose.yml) contains MaxScale
-configured with a 2 sharded database servers, populates them with data from shard1.sql and shard2.sql, and launches a maxscale instance for routing queries between them. 
-It also creates a user in each database names "maxuser" and gives it all the necessary permissions to act as the monitor and router using the init.sql scripts present in each folder of the maxscale.docker/sql directory. 
-To start, run the following commands in the maxscale-docker/maxscale
+configured with 2 sharded database servers, populates them with data from shard1.sql and shard2.sql, and launches a maxscale instance for routing queries between them. 
+It also creates a user in each database names "maxuser" and gives it all the necessary permissions to act as the monitor and router using the init.sql scripts present in each folder of the maxscale/sql directory. 
+
+To start, run the following commands in the maxscale-docker/maxscale directory
 
 ```
 docker-compose up -d
 ```
 
 After MaxScale and the servers have started (takes a few minutes), you can find
-the schema router on port 4000. The
-user `maxuser` with the password `maxpwd` can be used to test the cluster.
+the schema router's listener on port 4000. The user `maxuser` with the password `maxpwd` can be used to test the cluster.
+
 Assuming the mariadb client is installed on the host machine:
 ```
 $ mysql -umaxuser -pmaxpwd -h 127.0.0.1 -P 4000
@@ -40,6 +41,9 @@ flag to also remove the volumes.
 To run maxctrl in the container to see the status of the cluster:
 ```
 $ docker-compose exec maxscale maxctrl list servers
+```
+Output should look like this:
+```
 ┌─────────┬─────────┬──────┬─────────────┬─────────────────┬──────────┐
 │ Server  │ Address │ Port │ Connections │ State           │ GTID     │
 ├─────────┼─────────┼──────┼─────────────┼─────────────────┼──────────┤
@@ -48,6 +52,7 @@ $ docker-compose exec maxscale maxctrl list servers
 │ shard2  │ shard2  │ 3306 │ 0           │        Running  │ 0-3000-5 │
 ├─────────┼─────────┼──────┼─────────────┼─────────────────┼──────────┤
 ```
+
 ## Testing
 You can test the databases and the schema router by running the queries.py script with the following command
 
@@ -94,7 +99,7 @@ command: mysqld --log-bin=mariadb-bin --binlog-format=ROW --server-id=3001
 ```
 
 This specifies the command to be run when the container starts. 
-It starts MySQL with specific options such as enabling binary logging (--log-bin=mariadb-bin), setting the binary log format to row-based replication (--binlog-format=ROW), and assigning a unique server ID (--server-id=3001).
+It starts MySQL with enabled binary logging (--log-bin=mariadb-bin), setting the binary log format to row-based replication (--binlog-format=ROW), and assigning a unique server ID (--server-id=3001).
 
 ```
 ports:
@@ -220,7 +225,7 @@ def connect_one(query):
     try:
         connection = mysql.connector.connect(
             host='127.0.0.1',
-            port='4000',  # master1 is mapped on port 4002
+            port='4000', # Listener is mapped on port 4000
             user='maxuser',
             password='maxpwd',
             database='zipcodes_one'
