@@ -223,10 +223,13 @@ def connect_one(query):
             port='4000', # Listener is mapped on port 4000
             user='maxuser',
             password='maxpwd',
-            database='zipcodes_one'
         )
 
         cursor = connection.cursor()
+
+        # Execute USE statement to select the zipcodes_one database
+        cursor.execute("USE zipcodes_one")
+
         cursor.execute(query)
         rows = cursor.fetchall()
 
