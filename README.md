@@ -1,10 +1,5 @@
 # MariaDB MaxScale Docker image
 
-This Docker image runs the latest version of MariaDB MaxScale.
-
--	[Travis CI:  
-	![build status badge](https://img.shields.io/travis/mariadb-corporation/maxscale-docker/master.svg)](https://travis-ci.org/mariadb-corporation/maxscale-docker/branches)
-
 ## Running
 [The MaxScale docker-compose setup](./docker-compose.yml) contains MaxScale
 configured with 2 sharded database servers, populates them with data from shard1.sql and shard2.sql, and launches a maxscale instance for routing queries between them. 
