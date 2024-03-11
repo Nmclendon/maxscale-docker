@@ -16,6 +16,10 @@ def connect_one(query):
 
         # Create cursor to execute the query
         cursor = connection.cursor()
+
+        # Execute USE statement to select the zipcodes_one database
+        cursor.execute("USE zipcodes_one")
+        
         # Execute the query
         cursor.execute(query)
         # Fetch all rows returned by the query
@@ -53,6 +57,10 @@ def connect_two(query):
 
         # Create cursor to execute the query
         cursor = connection.cursor()
+
+        # Execute USE statement to select the zipcodes_two database
+        cursor.execute("USE zipcodes_two")
+        
         # Execute the query
         cursor.execute(query)
         # Fetch all rows returned by the query
