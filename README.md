@@ -318,10 +318,12 @@ Here are some links that I used to help me make this configuration and provide b
 
 **Permissions references**
 https://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-monitor/#required-grants
+
 https://mariadb.com/kb/en/mariadb-maxscale-6-setting-up-mariadb-maxscale/
 
 **Configuration references**
 https://mariadb.com/kb/en/mariadb-maxscale-6-configuring-servers/
+
 https://mariadb.com/kb/en/mariadb-maxscale-6-simple-sharding-with-two-servers/
 
 **More on sharding**
